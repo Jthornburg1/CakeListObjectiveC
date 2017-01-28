@@ -8,10 +8,15 @@
 
 #import "MasterViewController.h"
 #import "CakeCell.h"
+#import "Cake.h"
+#import "CakeController.h"
 
 @interface MasterViewController ()
 @property (strong, nonatomic) NSArray *objects;
 @property (strong, nonatomic) NSString *urlString;
+@property (strong, nonatomic) CakeController *controller;
+@property (strong, nonatomic) NSCache *cache;
+
 @end
 
 @implementation MasterViewController
@@ -19,7 +24,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _urlString = @"https://gist.githubusercontent.com/hart88/198f29ec5114a3ec3460/raw/8dd19a88f9b8d24c23d9960f3300d0c917a4f07c/cake.json";
-    [self getData];
+    self.controller = [CakeController new];
+    [self.controller getCakesAsynchronously:self.urlString completion:^(NSArray *objects) {
+        self.objects = objects;
+        [self.tableView reloadData];
+    }];
+}
+
+- (UIImage *)getCachedImageForkey:(NSString *)urlString {
+    return [self.cache objectForKey:urlString];
 }
 
 #pragma mark - Table View
@@ -33,16 +46,23 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CakeCell *cell = (CakeCell*)[tableView dequeueReusableCellWithIdentifier:@"CakeCell"];
+    Cake *cake = self.objects[indexPath.row];
+    cell.titleLabel.text = cake.name;
+    cell.descriptionLabel.text = cake.descripcion;
     
-    NSDictionary *object = self.objects[indexPath.row];
-    cell.titleLabel.text = object[@"title"];
-    cell.descriptionLabel.text = object[@"desc"];
- 
+    UIImage *cachedImage = [self getCachedImageForkey:cake.imageString];
     
-    NSURL *aURL = [NSURL URLWithString:object[@"image"]];
-    NSData *data = [NSData dataWithContentsOfURL:aURL];
-    UIImage *image = [UIImage imageWithData:data];
-    [cell.cakeImageView setImage:image];
+    if (cachedImage != nil) {
+        NSLog(@"Loading Cached");
+        cell.cakeImageView.image = cachedImage;
+    } else {
+        NSLog(@"Pulling image");
+        [self.controller getCakeImageAsynchronously:cake.imageString completion:^(NSData *data) {
+            UIImage *cellImage = [[UIImage alloc] initWithData:data];
+            [self.cache setObject:cellImage forKey:cake.imageString];
+            cell.cakeImageView.image = cellImage;
+        }];
+    }
     
     return cell;
 }
@@ -50,34 +70,4 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-// Functions that do heavy lifting should be done off the main thread.
-- (void)getData{
-    
-    NSURL *url = [NSURL URLWithString:@"https://gist.githubusercontent.com/hart88/198f29ec5114a3ec3460/raw/8dd19a88f9b8d24c23d9960f3300d0c917a4f07c/cake.json"];
-    
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    
-    NSError *jsonError;
-    id responseData = [NSJSONSerialization
-                       JSONObjectWithData:data
-                       options:kNilOptions
-                       error:&jsonError];
-    if (!jsonError){
-        self.objects = responseData;
-        [self.tableView reloadData];
-    } else {
-    }
-    
-}
-
-- (void)getDataAsynchronously:(NSString *)urlString completion:(void (^)(NSArray *))completion {
-    NSURL *url = [NSURL URLWithString:self.urlString];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
-    }];
-    
-}
-
 @end

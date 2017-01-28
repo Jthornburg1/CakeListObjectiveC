@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D2BFB4031E3D1E5500185CC0 /* Cake.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BFB4021E3D1E5500185CC0 /* Cake.m */; };
+		D2BFB4071E3D398C00185CC0 /* CakeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BFB4061E3D398C00185CC0 /* CakeController.m */; };
 		DBF17A171B0B648F004E6311 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF17A161B0B648F004E6311 /* main.m */; };
 		DBF17A1A1B0B648F004E6311 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF17A191B0B648F004E6311 /* AppDelegate.m */; };
 		DBF17A1D1B0B648F004E6311 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF17A1C1B0B648F004E6311 /* MasterViewController.m */; };
@@ -28,6 +30,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D2BFB4011E3D1E5500185CC0 /* Cake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cake.h; sourceTree = "<group>"; };
+		D2BFB4021E3D1E5500185CC0 /* Cake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cake.m; sourceTree = "<group>"; };
+		D2BFB4051E3D398C00185CC0 /* CakeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CakeController.h; sourceTree = "<group>"; };
+		D2BFB4061E3D398C00185CC0 /* CakeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CakeController.m; sourceTree = "<group>"; };
 		DBF17A111B0B648F004E6311 /* Cake List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cake List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF17A151B0B648F004E6311 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBF17A161B0B648F004E6311 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -63,6 +69,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D2BFB4001E3D1E2300185CC0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D2BFB4011E3D1E5500185CC0 /* Cake.h */,
+				D2BFB4021E3D1E5500185CC0 /* Cake.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		D2BFB4041E3D396C00185CC0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D2BFB4051E3D398C00185CC0 /* CakeController.h */,
+				D2BFB4061E3D398C00185CC0 /* CakeController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		DBF17A081B0B648F004E6311 = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +108,8 @@
 		DBF17A131B0B648F004E6311 /* Cake List */ = {
 			isa = PBXGroup;
 			children = (
+				D2BFB4041E3D396C00185CC0 /* Controller */,
+				D2BFB4001E3D1E2300185CC0 /* Models */,
 				DBF17A181B0B648F004E6311 /* AppDelegate.h */,
 				DBF17A191B0B648F004E6311 /* AppDelegate.m */,
 				DBF17A401B0B8EE3004E6311 /* View Controllers */,
@@ -240,8 +266,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2BFB4031E3D1E5500185CC0 /* Cake.m in Sources */,
 				DBF17A1A1B0B648F004E6311 /* AppDelegate.m in Sources */,
 				DBF17A3F1B0B8E16004E6311 /* CakeCell.m in Sources */,
+				D2BFB4071E3D398C00185CC0 /* CakeController.m in Sources */,
 				DBF17A1D1B0B648F004E6311 /* MasterViewController.m in Sources */,
 				DBF17A171B0B648F004E6311 /* main.m in Sources */,
 			);
